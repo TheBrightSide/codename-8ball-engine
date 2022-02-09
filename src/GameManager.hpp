@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include <raylib.h>
 
 #include "config.h"
@@ -9,17 +10,18 @@
 #include "DrawableManager.hpp"
 #include "Sprite.hpp"
 
-namespace GameManager
+class Scene
 {
-    class Scene
-    {
-    public:
-        Scene() {};
-        virtual ~Scene() = default;
+public:
+    Scene() {};
+    virtual ~Scene() = default;
 
-        virtual void Initialize() {};
-    };
+    virtual void Initialize() {};
+};
 
+class GameManager
+{
+private:
     struct GameState
     {
         bool scene_update;
@@ -27,7 +29,24 @@ namespace GameManager
         bool audio_uninitialized;
         float master_volume;
         Scene scene;
-    };
+    } state;
+
+    static GameManager* instance;
+
+    void ReinitializeScene();
+
+protected:
+    GameManager() : state { false, false, false, 1.f, {} } {};
+    ~GameManager() = default;
+
+public:
+    // disallow cloning singleton
+    GameManager(GameManager &other) = delete;
+
+    // disallow assignments to singleton
+    void operator=(const GameManager &) = delete;
+
+    static GameManager* GetInstance();
 
     /**
      * @brief Initializes the program
@@ -86,4 +105,4 @@ namespace GameManager
      * @return bool
      */
     bool IsAudioOn();
-}
+};

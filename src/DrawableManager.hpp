@@ -44,6 +44,7 @@ private:
 
 protected:
     DrawableManager() : drawable_pool(), current_id(0) {};
+    ~DrawableManager() = default;
 
 public:
     // disallow cloning singleton

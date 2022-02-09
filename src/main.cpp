@@ -5,13 +5,14 @@
 
 int main()
 {
-    GameManager::Initialize();
+    GameManager* game_manager = GameManager::GetInstance();
+    game_manager->Initialize();
 
-    while (!GameManager::ShouldQuit())
+    while (!game_manager->ShouldQuit())
     {
-        GameManager::Update();
+        game_manager->Update();
     }
 
-    GameManager::Deinitialize();
+    game_manager->Deinitialize();
     return 0;
 }
