@@ -2,7 +2,6 @@
 
 #include "DrawableManager.hpp"
 #include <iostream>
-#include <raylib.h>
 
 class Sprite : public Drawable
 {

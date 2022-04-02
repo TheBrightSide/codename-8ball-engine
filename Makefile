@@ -17,11 +17,15 @@ endif
 ERRFLAGS=-Wall -Wunused-variable -Wextra -Wno-enum-compare
 
 # Put header files here
-_DEPS=DrawableManager.cpp GameManager.cpp Sprite.cpp main.cpp
+_DEPS=main.cpp DrawableManager.cpp GameManager.cpp Sprite.cpp \
+imgui/imgui_demo.cpp imgui/imgui_draw.cpp \
+imgui/imgui_tables.cpp imgui/imgui_widgets.cpp imgui/imgui.cpp imgui/rlImGui.cpp
 DEPS=$(patsubst %, $(IDIR)/%, $(_DEPS))
 
 # Put cpp files but change extension to .o
-_OBJ=DrawableManager.o GameManager.o Sprite.o main.o
+_OBJ=main.o DrawableManager.o GameManager.o Sprite.o \
+imgui/imgui_demo.o imgui/imgui_draw.o \
+imgui/imgui_tables.o imgui/imgui_widgets.o imgui/imgui.o imgui/rlImGui.o
 OBJ=$(patsubst %, $(ODIR)/%, $(_OBJ))
 
 # Libraries

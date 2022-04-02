@@ -1,8 +1,6 @@
 bin/*.exe
 bin/*.out
 bin/*.dll
-include
-include/**
-lib
-lib/**
 obj/*.o
+obj/imgui/*.o
+**/imgui.ini

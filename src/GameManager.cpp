@@ -1,6 +1,7 @@
 #include "GameManager.hpp"
 
 GameManager* GameManager::instance = nullptr;
+bool checkbox_checked = false;
 
 GameManager* GameManager::GetInstance()
 {
@@ -17,7 +18,7 @@ void GameManager::ReinitializeScene()
     // Destroy any leftover drawables to prevent memory leaking
     DrawableManager::GetInstance()->DestroyAllDrawables();
 
-    DrawableManager::GetInstance()->InstantiateDrawable<Sprite>("unnamed.png", Vector2{}, 1.f, 0.f);
+    DrawableManager::GetInstance()->InstantiateDrawable<Sprite>("unnamed.png", Vector2{}, 0.25f, 0.f);
 
     // Creates all the drawables in the newly initialized scene
     DrawableManager::GetInstance()->CreateAll();
@@ -28,6 +29,8 @@ void GameManager::Initialize()
     // Initializes the windows, audio, physics and icon
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
     InitAudioDevice();
+
+    SetupRLImGui(true);
 
     // Sets the exit key to 0 so the windows closes when the quit button is pressed
     SetExitKey(0);
@@ -74,17 +77,22 @@ void GameManager::Update()
         state.scene_update = false;
         std::cout << "INFO: GameManager: Scene Update!" << std::endl;
     }
-    
+        
     BeginDrawing();
         ClearBackground(BLACK);
-
+        
         // Draws and updates all drawables
         DrawableManager::GetInstance()->UpdateAll();
         DrawableManager::GetInstance()->DrawAll();
 
         // Draws FPS
         DrawText(std::to_string(GetFPS()).c_str(), 0, WINDOW_HEIGHT - 20, 20, GREEN);
+        
+        BeginRLImGui();
+            ImGui::ShowDemoWindow();
+        EndRLImGui();
     EndDrawing();
+    
 }
 
 void GameManager::Deinitialize()
@@ -93,6 +101,7 @@ void GameManager::Deinitialize()
     DrawableManager::GetInstance()->DestroyAllDrawables();
 
     // Close audio and the windows when the scene is deinitialized
+    ShutdownRLImGui();
     CloseAudioDevice();
     CloseWindow();
 
