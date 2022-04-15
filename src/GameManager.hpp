@@ -3,15 +3,13 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <raylib/raylib.h>
-#include <raylib/rlgl.h>
+#include <raylib.h>
 
 #include "config.h"
-#include "imgui/imgui.h"
-#include "imgui/rlImGui.h"
 
-#include "DrawableManager.hpp"
-#include "Sprite.hpp"
+#include "ObjectManager.hpp"
+#include "Entity.hpp"
+#include "./components/TransformComponent2D.hpp"
 
 class Scene
 {
@@ -34,20 +32,20 @@ private:
         Scene scene;
     } state;
 
-    static GameManager* instance;
-
     void ReinitializeScene();
 
-protected:
+    static GameManager* instance;
+
+private:
     GameManager() : state { false, false, false, 1.f, {} } {};
     ~GameManager() = default;
 
 public:
     // disallow cloning singleton
-    GameManager(GameManager &other) = delete;
+    GameManager(GameManager const&) = delete;
 
     // disallow assignments to singleton
-    void operator=(const GameManager &) = delete;
+    void operator=(GameManager const&) = delete;
 
     static GameManager* GetInstance();
 

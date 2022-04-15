@@ -1,7 +1,7 @@
 #include "GameManager.hpp"
+#include "ECSManager.hpp"
 
 GameManager* GameManager::instance = nullptr;
-bool checkbox_checked = false;
 
 GameManager* GameManager::GetInstance()
 {
@@ -16,12 +16,13 @@ GameManager* GameManager::GetInstance()
 void GameManager::ReinitializeScene()
 {
     // Destroy any leftover drawables to prevent memory leaking
-    DrawableManager::GetInstance()->DestroyAllDrawables();
+    ObjectManager::GetInstance()->DestroyAllEntities();
 
-    DrawableManager::GetInstance()->InstantiateDrawable<Sprite>("unnamed.png", Vector2{}, 0.25f, 0.f);
+    auto entity = ECSManager::CreateEntity();
+    auto transformComponent = ECSManager::CreateComponent<TransformComponent2D>();
+    entity.lock()->BindComponent(transformComponent);
 
-    // Creates all the drawables in the newly initialized scene
-    DrawableManager::GetInstance()->CreateAll();
+    ObjectManager::GetInstance()->TriggerCreateEvents();
 }
 
 void GameManager::Initialize()
@@ -29,8 +30,6 @@ void GameManager::Initialize()
     // Initializes the windows, audio, physics and icon
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
     InitAudioDevice();
-
-    SetupRLImGui(true);
 
     // Sets the exit key to 0 so the windows closes when the quit button is pressed
     SetExitKey(0);
@@ -82,26 +81,19 @@ void GameManager::Update()
         ClearBackground(BLACK);
         
         // Draws and updates all drawables
-        DrawableManager::GetInstance()->UpdateAll();
-        DrawableManager::GetInstance()->DrawAll();
+        ObjectManager::GetInstance()->TriggerUpdateEvents();
 
         // Draws FPS
         DrawText(std::to_string(GetFPS()).c_str(), 0, WINDOW_HEIGHT - 20, 20, GREEN);
-        
-        BeginRLImGui();
-            ImGui::ShowDemoWindow();
-        EndRLImGui();
     EndDrawing();
-    
 }
 
 void GameManager::Deinitialize()
 {
     // Destroy any leftover drawables to prevent memory leaking
-    DrawableManager::GetInstance()->DestroyAllDrawables();
+    ObjectManager::GetInstance()->DestroyAllEntities();
 
     // Close audio and the windows when the scene is deinitialized
-    ShutdownRLImGui();
     CloseAudioDevice();
     CloseWindow();
 

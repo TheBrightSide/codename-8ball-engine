@@ -1,4 +1,6 @@
 #include <iostream>
+
+#define USE_RAYLIB
 #include "GameManager.hpp"
 
 int main()

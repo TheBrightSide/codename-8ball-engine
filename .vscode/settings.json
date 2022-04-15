@@ -47,6 +47,18 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "*.tpp": "cpp",
-        "*.rh": "cpp"
-    }
+        "*.rh": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
+        "map": "cpp",
+        "sstream": "cpp",
+        "cinttypes": "cpp"
+    },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/thefunny/8ball-engine/bin",
+            "binaryPath": "/home/thefunny/8ball-engine/bin/main.out",
+            "binaryArgs": []
+        }
+    ]
 }
