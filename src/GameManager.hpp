@@ -9,6 +9,7 @@
 #include "ObjectManager.hpp"
 #include "Entity.hpp"
 #include "./components/TransformComponent2D.hpp"
+#include "./components/SpriteComponent.hpp"
 
 #include "./util/graphics.hpp"
 
@@ -92,17 +93,5 @@ public:
      * 
      * @note Meant to be used at any point in the code
      */
-    void ChangeScene(Scene scene); 
-
-    /**
-     * @brief An API function, which turns audio on or off
-     */
-    void ToggleAudio();
-
-    /**
-     * @brief An API function which checks the game manager's last stored master volume and tells if the audio is on or not
-     * 
-     * @return bool
-     */
-    bool IsAudioOn();
+    void ChangeScene(Scene scene);
 };

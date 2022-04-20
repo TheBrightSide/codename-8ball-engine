@@ -1,10 +1,11 @@
 #pragma once
 
 #include "./Component.hpp"
-#include "TransformComponent2D.hpp"
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
+#include "./TransformComponent2D.hpp"
+#include "../util/graphics.hpp"
+#include <SDL2/SDL.h>
 #include <string>
+#include <memory>
 
 class SpriteComponent : public Component
 {
@@ -19,5 +20,5 @@ public:
 
 protected:
     bool wantsUpdate = true;
-    SDL_Texture* texture = nullptr;
+    std::weak_ptr<Texture> texture;
 };

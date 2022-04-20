@@ -4,7 +4,7 @@
 #include "./components/Component.hpp"
 #include "ObjectManager.hpp"
 
-namespace ECSManager
+namespace ECS
 {
     std::weak_ptr<Entity> CreateEntity()
     {

@@ -12,9 +12,9 @@ public:
     void OnDestroy() override {};
     void OnUpdate() override {};
 
-    Vec2f position;
-    Vec2f rotation;
-    Vec2f scale;
+    Vec2f Position;
+    Vec2f Rotation;
+    Vec2f Scale;
 protected:
     bool wantsUpdate = true;
 };

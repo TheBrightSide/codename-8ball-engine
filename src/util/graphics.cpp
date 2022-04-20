@@ -6,7 +6,7 @@
 SDL_Window *winHandle = nullptr;
 SDL_Renderer *winRenderer = nullptr;
 
-bool InitWindow(
+bool Graphics::InitWindow(
     Vec2f winDimensions, const char* title,
     SDL_WindowFlags winFlags, SDL_RendererFlags rendFlags)
 {
@@ -85,7 +85,7 @@ bool InitWindow(
     return success;
 }
 
-bool CloseWindow()
+bool Graphics::CloseWindow()
 {
     if (winHandle == nullptr)
     {
@@ -103,7 +103,7 @@ bool CloseWindow()
     }
 }
 
-void BeginDrawing()
+void Graphics::BeginDrawing()
 {
     SDL_Event e;
     while (SDL_PollEvent(&e))
@@ -115,16 +115,15 @@ void BeginDrawing()
         }
     }
 
-    SDL_SetRenderDrawColor(winRenderer, 0, 0, 0, 0);
     SDL_RenderClear(winRenderer);
 }
 
-void EndDrawing()
+void Graphics::EndDrawing()
 {
     SDL_RenderPresent(winRenderer);
 }
 
-void SetWindowPosition(Vec2f pos)
+void Graphics::SetWindowPosition(Vec2f pos)
 {
     if (winHandle == nullptr)
     {
@@ -133,4 +132,55 @@ void SetWindowPosition(Vec2f pos)
     }
 
     SDL_SetWindowPosition(winHandle, (int)pos.x, (int)pos.y);
+}
+
+void Texture::LoadTexture(const char *path)
+{
+    if (winHandle == nullptr || winRenderer == nullptr)
+    {
+        printf("ERROR: Cannot create texture without a renderer");
+    }
+    
+    SDL_Texture *texture = IMG_LoadTexture(winRenderer, path);
+
+    if (texture == nullptr)
+    {
+        printf("FATAL: Couldn't load image \"%s\"", path);
+        printf("FATAL: Error message: %s", SDL_GetError());
+        exit(1);
+    }
+
+    this->texture = texture;
+}
+
+void Texture::UnloadTexture()
+{
+    if (this->texture != nullptr)
+    {
+        SDL_DestroyTexture(this->texture);
+        this->texture = nullptr;
+    }
+}
+
+void Texture::DrawTexture()
+{
+    if (this->texture != nullptr)
+    {
+        SDL_RenderCopy(winRenderer, this->texture, 
+            &Source, &Destination);
+    }
+}
+
+Vec2i Texture::GetSize()
+{
+    Vec2i out{};
+    if (this->texture != nullptr)
+        SDL_QueryTexture(this->texture, NULL, NULL, &out.x, &out.y);
+    
+    return out;
+}
+
+Texture::~Texture()
+{
+    this->UnloadTexture();
 }

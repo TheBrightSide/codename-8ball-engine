@@ -18,33 +18,21 @@ void GameManager::ReinitializeScene()
     // Destroy any leftover drawables to prevent memory leaking
     ObjectManager::GetInstance()->DestroyAllEntities();
 
-    auto entity = ECSManager::CreateEntity();
-    auto transformComponent = ECSManager::CreateComponent<TransformComponent2D>();
+    auto entity = ECS::CreateEntity();
+    auto transformComponent = ECS::CreateComponent<TransformComponent2D>();
+    auto spriteComponent = ECS::CreateComponent<SpriteComponent>();
+    spriteComponent.lock()->SpriteImagePath = "unnamed.png";
     entity.lock()->BindComponent(transformComponent);
+    entity.lock()->BindComponent(spriteComponent);
 
     ObjectManager::GetInstance()->TriggerCreateEvents();
 }
 
 void GameManager::Initialize()
 {
-    // Initializes the windows, audio, physics and icon
-    if(!InitWindow(Vec2f{ WINDOW_WIDTH, WINDOW_HEIGHT }, WINDOW_TITLE, 0, 0))
+    // Initializes the windows
+    if(!Graphics::InitWindow(Vec2f{ WINDOW_WIDTH, WINDOW_HEIGHT }, WINDOW_TITLE, 0, 0))
         exit(1);
-    
-    // InitAudioDevice();
-
-    // // Checks if the audio devices work properly
-    // if (!IsAudioDeviceReady())
-    // {
-    //     std::cout << "INFO: Audio device wasn't initialized properly" << std::endl;
-    //     state.audio_uninitialized = true;
-    // }
-    // else state.audio_uninitialized = false;
-
-    // If the audio device initialized successfully,
-    // Set the master volume to max possible
-    // if (!state.audio_uninitialized)
-        // SetMasterVolume(state.master_volume);
 
     ReinitializeScene();
 }
@@ -73,21 +61,18 @@ void GameManager::Update()
         std::cout << "INFO: GameManager: Scene Update!" << std::endl;
     }
 
-    BeginDrawing();
+    Graphics::BeginDrawing();
     // Draws and updates all drawables
     ObjectManager::GetInstance()->TriggerUpdateEvents();
 
-    EndDrawing();
+    Graphics::EndDrawing();
 }
 
 void GameManager::Deinitialize()
 {
     // Destroy any leftover drawables to prevent memory leaking
     ObjectManager::GetInstance()->DestroyAllEntities();
-
-    // Close audio and the windows when the scene is deinitialized
-    // CloseAudioDevice();
-    CloseWindow();
+    Graphics::CloseWindow();
 
     std::cout << "INFO: Goodbye!" << std::endl;
 }
@@ -95,11 +80,5 @@ void GameManager::Deinitialize()
 bool GameManager::ShouldQuit()
 {
     // Returns if the window should quit
-    return state.should_quit /* || WindowShouldClose() */;
+    return state.should_quit;
 }
-
-void GameManager::ToggleAudio()
-{}
-
-bool GameManager::IsAudioOn()
-{}
