@@ -40,3 +40,10 @@ void Entity::BindComponent(std::weak_ptr<Component> component)
     component.lock()->IsUsed = true;
     boundComponents[componentName] = component;
 }
+
+std::weak_ptr<Component> Entity::GetComponent(std::string componentName)
+{
+    if (boundComponents.find(componentName) != boundComponents.end())
+        return boundComponents[componentName];
+    else return std::weak_ptr<Component>();
+}

@@ -3,13 +3,14 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <raylib.h>
 
 #include "config.h"
 
 #include "ObjectManager.hpp"
 #include "Entity.hpp"
 #include "./components/TransformComponent2D.hpp"
+
+#include "./util/graphics.hpp"
 
 class Scene
 {
@@ -27,8 +28,6 @@ private:
     {
         bool scene_update;
         bool should_quit;
-        bool audio_uninitialized;
-        float master_volume;
         Scene scene;
     } state;
 
@@ -37,7 +36,7 @@ private:
     static GameManager* instance;
 
 private:
-    GameManager() : state { false, false, false, 1.f, {} } {};
+    GameManager() : state { false, false, {} } {};
     ~GameManager() = default;
 
 public:

@@ -21,19 +21,9 @@ public:
     virtual void OnUpdate() {}
 
     inline bool WantsUpdate() { return wantsUpdate; }
-    void BindToEntity(std::weak_ptr<Object> object)
-    {
-        assert(!object.expired() && "Passed an expired pointer");
-        assert(ObjectManager::CheckBaseName(object, "Entity") && "The passed object was not an Entity");
-        IsUsed = true;
-        boundEntity = object;
-    }
-
-    void BindObject(uint64_t id)
-    {
-        auto object = ObjectManager::GetInstance()->GetObjectFromID(id);
-        BindToEntity(object);
-    }
+    void BindToEntity(std::weak_ptr<Object> object);
+    void BindToEntity(uint64_t id);
+    std::weak_ptr<Component> GetComponent(std::string);
 
 protected:
     std::weak_ptr<Object> boundEntity;
@@ -45,5 +35,5 @@ protected:
     const char* ComponentName() override { return #TYPE; };
 
 #define DEFINE_DERIVED_COMPONENT(TYPE, BASETYPE) \
-    TYPE(uint64_t) : BASETYPE(id) {}; \
+    TYPE(uint64_t id) : BASETYPE(id) {}; \
     const char* ComponentName() override { return #TYPE; };

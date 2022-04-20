@@ -24,4 +24,5 @@ public:
     void OnEntityDestroy(); // Gets called when destroyed
 
     void BindComponent(std::weak_ptr<Component> component);
+    std::weak_ptr<Component> GetComponent(std::string componentName);
 };

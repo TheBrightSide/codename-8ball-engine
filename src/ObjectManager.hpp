@@ -24,7 +24,6 @@ public:
     TYPE(uint64_t id) : Object(id) {}; \
     const char* ObjectBaseName() override { return #TYPE; };
 
-
 class ObjectManager
 {
 private:

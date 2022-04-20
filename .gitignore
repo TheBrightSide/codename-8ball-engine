@@ -2,5 +2,4 @@ bin/*.exe
 bin/*.out
 bin/*.dll
 obj/*.o
-obj/imgui/*.o
 **/imgui.ini

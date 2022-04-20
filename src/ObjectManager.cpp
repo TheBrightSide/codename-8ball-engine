@@ -45,9 +45,10 @@ void ObjectManager::DestroyAllEntities()
         {
             // static_cast<Entity*>(&(*object.second))->OnEntityDestroy();
             std::static_pointer_cast<Entity>(object.second)->OnEntityDestroy();
-            objectTable.erase(object.first);
         }
     }
+
+    objectTable.clear();
 }
 
 void ObjectManager::DestroyEntityFromID(uint64_t id)
