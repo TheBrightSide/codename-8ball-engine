@@ -66,8 +66,8 @@ public:
     void DestroyEntityFromID(uint64_t id);
 
     void DestroyAllObjects();
-    void DestroyObjectFromID(int id);
-    std::weak_ptr<Object> GetObjectFromID(int id);
+    void DestroyObjectFromID(uint64_t id);
+    std::weak_ptr<Object> GetObjectFromID(uint64_t id);
 
     void TriggerCreateEvents();
     void TriggerUpdateEvents();

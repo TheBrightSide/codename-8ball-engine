@@ -14,8 +14,7 @@ void SpriteComponent::OnUpdate()
     std::shared_ptr<TransformComponent2D> transformComponent;
     if (!GetComponent("TransformComponent2D").expired())
     {
-        transformComponent =
-            std::static_pointer_cast<TransformComponent2D>(GetComponent("TransformComponent2D").lock());
+        transformComponent = MGetComponent(TransformComponent2D);
         
         texture.lock()->Destination.x = transformComponent->Position.x;
         texture.lock()->Destination.y = transformComponent->Position.y;

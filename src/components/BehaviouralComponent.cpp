@@ -2,15 +2,12 @@
 
 void BehaviouralComponent::OnUpdate()
 {
-    std::shared_ptr<TransformComponent2D> transformComponent =
-        std::static_pointer_cast<TransformComponent2D>(GetComponent("TransformComponent2D").lock());
-    
-    std::shared_ptr<SpriteComponent> spriteComponent =
-        std::static_pointer_cast<SpriteComponent>(GetComponent("SpriteComponent").lock());
+    auto transformComponent = MGetComponent(TransformComponent2D);
+    auto spriteComponent = MGetComponent(SpriteComponent);
 
     Vec2i mouseDelta = Input::GetMouseDelta();
     Vec2i mousePos = Input::GetMousePos();
-    Vec2i spritePos = { transformComponent->Position.x, transformComponent->Position.y };
+    Vec2i spritePos = { (int)transformComponent->Position.x, (int)transformComponent->Position.y };
     Vec2i spriteSize = spriteComponent->GetSpriteSize();
     Recti spriteRect = { spritePos.x, spritePos.y, spriteSize.x + spritePos.x, spriteSize.y + spritePos.y };
 

@@ -8,7 +8,7 @@
 class Component : public Object
 {
 public:
-    DEFINE_OBJECT(Component);
+    DEFINE_OBJECT(Component)
 
     virtual ~Component() = default;
     virtual const char* ComponentName() { return nullptr; }
@@ -37,3 +37,5 @@ protected:
 #define DEFINE_DERIVED_COMPONENT(TYPE, BASETYPE) \
     TYPE(uint64_t id) : BASETYPE(id) {}; \
     const char* ComponentName() override { return #TYPE; };
+
+#define MGetComponent(ComponentType) std::static_pointer_cast<ComponentType>(GetComponent(#ComponentType).lock())

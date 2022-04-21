@@ -70,12 +70,12 @@ void ObjectManager::DestroyAllObjects()
     objectTable.clear();
 }
 
-void ObjectManager::DestroyObjectFromID(int id)
+void ObjectManager::DestroyObjectFromID(uint64_t id)
 {
     objectTable.erase(id);
 }
 
-std::weak_ptr<Object> ObjectManager::GetObjectFromID(int id)
+std::weak_ptr<Object> ObjectManager::GetObjectFromID(uint64_t id)
 {
     if (objectTable.find(id) != objectTable.end())
         return objectTable[id];

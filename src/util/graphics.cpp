@@ -96,6 +96,7 @@ bool Graphics::CloseWindow()
     else
     {
         SDL_DestroyWindow(winHandle);
+        SDL_DestroyRenderer(winRenderer);
         
         printf("INFO: Successfully closed window!\n");
         winHandle = nullptr;
