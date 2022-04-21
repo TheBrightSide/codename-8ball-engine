@@ -10,6 +10,7 @@
 #include "Entity.hpp"
 #include "./components/TransformComponent2D.hpp"
 #include "./components/SpriteComponent.hpp"
+#include "./components/BehaviouralComponent.hpp"
 
 #include "./util/graphics.hpp"
 

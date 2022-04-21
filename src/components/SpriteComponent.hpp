@@ -16,6 +16,8 @@ public:
     void OnDestroy() override;
     void OnUpdate() override;
 
+    Vec2i GetSpriteSize();
+
     std::string SpriteImagePath;
 
 protected:

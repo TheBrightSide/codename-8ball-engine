@@ -30,3 +30,10 @@ void SpriteComponent::OnDestroy()
     if (!(this->texture.expired()))
         ObjectManager::GetInstance()->DestroyObjectFromID(texture.lock()->GetID());
 }
+
+Vec2i SpriteComponent::GetSpriteSize()
+{
+    if (!(this->texture.expired()))
+        return Vec2i { texture.lock()->Source.w, texture.lock()->Source.h };
+    else return Vec2i {};
+}

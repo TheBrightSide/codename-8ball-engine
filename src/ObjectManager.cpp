@@ -18,15 +18,18 @@ bool ObjectManager::CheckBaseName(std::weak_ptr<Object> object, const char* name
 
 void ObjectManager::CleanUnusedComponents()
 {
+    std::list<uint64_t> idsForDestroying;
     for (auto object : objectTable)
     {
         if (CheckBaseName(object.second, "Component"))
         {
-            // if (!(static_cast<Component*>(&(*object.second))->IsUsed))
             if (!(std::static_pointer_cast<Component>(object.second)->IsUsed))
-                objectTable.erase(object.first);
+            idsForDestroying.push_back(object.first);
         }
     }
+
+    for(auto id : idsForDestroying)
+        objectTable.erase(id);
 }
 
 ObjectManager* ObjectManager::GetInstance()
@@ -43,7 +46,6 @@ void ObjectManager::DestroyAllEntities()
     {
         if (CheckBaseName(object.second, "Entity"))
         {
-            // static_cast<Entity*>(&(*object.second))->OnEntityDestroy();
             std::static_pointer_cast<Entity>(object.second)->OnEntityDestroy();
         }
     }
@@ -57,7 +59,6 @@ void ObjectManager::DestroyEntityFromID(uint64_t id)
     {
         if (CheckBaseName(objectTable[id], "Entity"))
         {
-            // static_cast<Entity*>(&(*objectTable[id]))->OnEntityDestroy();
             std::static_pointer_cast<Entity>(objectTable[id])->OnEntityDestroy();
             objectTable.erase(id);
         }
@@ -90,10 +91,14 @@ void ObjectManager::TriggerCreateEvents()
             std::static_pointer_cast<Entity>(obj.second)->OnEntityCreate();
         }
     }
+
+    CleanUnusedComponents();
 }
 
 void ObjectManager::TriggerUpdateEvents()
 {
+    CleanUnusedComponents();
+
     for (auto obj : objectTable)
     {
         if (CheckBaseName(obj.second, "Entity"))

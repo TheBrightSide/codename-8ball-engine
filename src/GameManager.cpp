@@ -19,11 +19,11 @@ void GameManager::ReinitializeScene()
     ObjectManager::GetInstance()->DestroyAllEntities();
 
     auto entity = ECS::CreateEntity();
-    auto transformComponent = ECS::CreateComponent<TransformComponent2D>();
     auto spriteComponent = ECS::CreateComponent<SpriteComponent>();
     spriteComponent.lock()->SpriteImagePath = "unnamed.png";
-    entity.lock()->BindComponent(transformComponent);
+    entity.lock()->BindComponent(ECS::CreateComponent<TransformComponent2D>());
     entity.lock()->BindComponent(spriteComponent);
+    entity.lock()->BindComponent(ECS::CreateComponent<BehaviouralComponent>());
 
     ObjectManager::GetInstance()->TriggerCreateEvents();
 }
@@ -31,7 +31,8 @@ void GameManager::ReinitializeScene()
 void GameManager::Initialize()
 {
     // Initializes the windows
-    if(!Graphics::InitWindow(Vec2f{ WINDOW_WIDTH, WINDOW_HEIGHT }, WINDOW_TITLE, 0, 0))
+    if(!Graphics::InitWindow(Vec2f{ WINDOW_WIDTH, WINDOW_HEIGHT }, WINDOW_TITLE,
+        static_cast<SDL_WindowFlags>(0), static_cast<SDL_RendererFlags>(0))) /* a very annoying fpermissive warning */
         exit(1);
 
     ReinitializeScene();

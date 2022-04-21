@@ -5,6 +5,7 @@
 #include <memory>
 #include <cstring>
 #include <cassert>
+#include <cstdio>
 #include <type_traits>
 
 class Object
@@ -14,7 +15,10 @@ private:
     
 public:
     Object(uint64_t id) : id(id) {};
-    virtual ~Object() = default;
+    virtual ~Object()
+    {
+        printf("Destroyed Object with id %lld\n", id);
+    }
 
     virtual const char* ObjectBaseName() { return nullptr; }
     inline uint64_t GetID() { return id; }

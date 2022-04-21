@@ -17,7 +17,7 @@ compile_pattern = ".*\.cpp$"
 
 cflags = f"-I{source_dir}" + call_shell("pkg-config --cflags SDL2")
 err_flags = "-Wall -Wunused-variable -Wextra -Wno-enum-compare -fpermissive -g -ggdb -fdiagnostics-color=always"
-libs = call_shell("pkg-config --libs SDL2") + " " + call_shell("pkg-config --libs SDL2_Image")
+libs = "-LC:/msys64/mingw64/bin/../lib -lmingw32 -lSDL2main -lSDL2" + " " + "-LC:/msys64/mingw64/bin/../lib -lSDL2_image -lmingw32 -lSDL2main -lSDL2"
 out_ext = ""
 
 if platform.system() == "Windows":
