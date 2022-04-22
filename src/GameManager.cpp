@@ -18,6 +18,12 @@ void GameManager::ReinitializeScene()
     // Destroy any leftover drawables to prevent memory leaking
     ObjectManager::GetInstance()->DestroyAllEntities();
 
+    auto secondEntity = ECS::CreateEntity();
+    auto secondSpriteComponent = ECS::CreateComponent<SpriteComponent>();
+    secondSpriteComponent.lock()->SpriteImagePath = "knai.bmp";
+    secondEntity.lock()->BindComponent(ECS::CreateComponent<TransformComponent2D>());
+    secondEntity.lock()->BindComponent(secondSpriteComponent);
+    
     auto entity = ECS::CreateEntity();
     auto spriteComponent = ECS::CreateComponent<SpriteComponent>();
     spriteComponent.lock()->SpriteImagePath = "unnamed.png";
@@ -33,6 +39,9 @@ void GameManager::Initialize()
     // Initializes the windows
     if(!Graphics::InitWindow(Vec2f{ WINDOW_WIDTH, WINDOW_HEIGHT }, WINDOW_TITLE,
         static_cast<SDL_WindowFlags>(0), static_cast<SDL_RendererFlags>(0))) /* a very annoying fpermissive warning */
+        exit(1);
+
+    if(!SDLImGui::InitImGui())
         exit(1);
 
     ReinitializeScene();
@@ -63,9 +72,14 @@ void GameManager::Update()
     }
 
     Graphics::BeginDrawing();
+    SDLImGui::BeginImGuiDrawing();
+
     // Draws and updates all drawables
     ObjectManager::GetInstance()->TriggerUpdateEvents();
 
+    ImGui::ShowDemoWindow();
+    
+    SDLImGui::EndImGuiDrawing();
     Graphics::EndDrawing();
 }
 
@@ -73,6 +87,8 @@ void GameManager::Deinitialize()
 {
     // Destroy any leftover drawables to prevent memory leaking
     ObjectManager::GetInstance()->DestroyAllEntities();
+
+    SDLImGui::CloseImGui();
     Graphics::CloseWindow();
 
     std::cout << "INFO: Goodbye!" << std::endl;

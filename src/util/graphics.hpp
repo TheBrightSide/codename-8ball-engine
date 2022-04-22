@@ -5,6 +5,9 @@
 #include <cassert>
 #include <memory>
 #include <map>
+#include "./imgui/imgui.h"
+#include "./imgui/backends/imgui_impl_sdl.h"
+#include "./imgui/backends/imgui_impl_sdlrenderer.h"
 #include "../ObjectManager.hpp"
 #include "./la.hpp"
 
@@ -46,6 +49,7 @@ namespace Graphics
 
     // Used to set the window position
     void SetWindowPosition(Vec2f);
+
 };
 
 namespace Input
@@ -70,3 +74,14 @@ namespace Input
     bool IsMouseButtonUp(uint8_t button);
     // float GetMouseWheelMove();
 };
+
+namespace SDLImGui
+{
+    bool InitImGui();
+
+    void CloseImGui();
+
+    void BeginImGuiDrawing();
+
+    void EndImGuiDrawing();
+}
