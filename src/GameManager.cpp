@@ -24,13 +24,6 @@ void GameManager::ReinitializeScene()
     secondEntity.lock()->BindComponent(ECS::CreateComponent<TransformComponent2D>());
     secondEntity.lock()->BindComponent(secondSpriteComponent);
     
-    auto entity = ECS::CreateEntity();
-    auto spriteComponent = ECS::CreateComponent<SpriteComponent>();
-    spriteComponent.lock()->SpriteImagePath = "unnamed.png";
-    entity.lock()->BindComponent(ECS::CreateComponent<TransformComponent2D>());
-    entity.lock()->BindComponent(spriteComponent);
-    entity.lock()->BindComponent(ECS::CreateComponent<BehaviouralComponent>());
-
     ObjectManager::GetInstance()->TriggerCreateEvents();
 }
 
@@ -72,14 +65,10 @@ void GameManager::Update()
     }
 
     Graphics::BeginDrawing();
-    SDLImGui::BeginImGuiDrawing();
 
     // Draws and updates all drawables
     ObjectManager::GetInstance()->TriggerUpdateEvents();
 
-    ImGui::ShowDemoWindow();
-    
-    SDLImGui::EndImGuiDrawing();
     Graphics::EndDrawing();
 }
 

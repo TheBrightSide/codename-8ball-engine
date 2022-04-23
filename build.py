@@ -22,7 +22,7 @@ libs = ""
 if platform.system() == "Windows":
     libs = "-LC:/msys64/mingw64/bin/../lib -lSDL2_image -lmingw32 -lSDL2main -lSDL2"
 else:
-    libs = call_shell("pkg-config --libs SDL2") + " " + call_shell("pkg-config --libs SDL2_image")
+    libs = call_shell("pkg-config --libs sdl2") + " " + call_shell("pkg-config --libs SDL2_image")
 
 out_ext = ""
 if platform.system() == "Windows":

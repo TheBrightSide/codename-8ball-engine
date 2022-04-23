@@ -1,5 +1,6 @@
 #include "./graphics.hpp"
 #include "../GameManager.hpp"
+#include "../config.h"
 
 // suggestion: maybe this library could open more than one window in the future??
 
@@ -15,10 +16,10 @@ bool Graphics::InitWindow(
     SDL_WindowFlags winFlags, SDL_RendererFlags rendFlags)
 {
     if (winFlags == 0)
-        winFlags = static_cast<SDL_WindowFlags>(SDL_WINDOW_SHOWN);
+        winFlags = static_cast<SDL_WindowFlags>(SDL_WINDOW_FLAGS);
 
     if (rendFlags == 0)
-        rendFlags = static_cast<SDL_RendererFlags>(SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
+        rendFlags = static_cast<SDL_RendererFlags>(SDL_RENDERER_FLAGS);
     
     if (winHandle != nullptr)
     {
