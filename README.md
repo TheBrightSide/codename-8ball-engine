@@ -20,24 +20,24 @@
 ```json
 [
     {
-        components: {
+        "components": {
             "TransformComponent2D": {
-                Position: [1.2, 2.4],
-                Rotation: [],
-                Scale: []
+                "Position": [1.2, 2.4],
+                "Rotation": [],
+                "Scale": []
             },
             "SpriteComponent": {
-                SpriteImagePath: "path/to/your/image.png"
+                "SpriteImagePath": "path/to/your/image.png"
             }
             /* insert your behaviour components */
         }
     },
     {
-        components: {
+        "components": {
             "TransformComponent2D": {
-                Position: [0, 0],
-                Rotation: [0, 0],
-                Scale: [0, 0]
+                "Position": [0, 0],
+                "Rotation": [0, 0],
+                "Scale": [0, 0]
             }
         }
     }
